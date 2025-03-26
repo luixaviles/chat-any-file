@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@app/client/auth": ["libs/client/auth/src/index.ts"],
       "@app/shared": ["libs/shared/src/index.ts"]
     }
   },
