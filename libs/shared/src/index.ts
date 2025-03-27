@@ -1,3 +1,3 @@
-export * from './lib/types/auth-types';
+export * from './lib/utilities/utilities';
 export * from './lib/types/types';
-export * from './lib/utils/utils';
+export * from './lib/types/auth-types';
