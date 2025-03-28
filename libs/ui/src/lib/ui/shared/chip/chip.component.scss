@@ -1,0 +1,11 @@
+.chip-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+}
+
+
+p-button {
+  padding: 0 0.5rem;
+}

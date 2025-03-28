@@ -16,8 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@app/api": ["libs/api/src/index.ts"],
-      "@app/client/auth": ["libs/client/auth/src/index.ts"],
-      "@app/shared": ["libs/shared/src/index.ts"]
+      "@app/shared": ["libs/shared/src/index.ts"],
+      "@app/ui": ["libs/ui/src/index.ts"],
+      "@lib/environments": ["libs/environments/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

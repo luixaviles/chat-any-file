@@ -17,12 +17,22 @@
         "tsConfig": "apps/client/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
+          "apps/client/src/favicon.ico",
+          "apps/client/src/assets",
           {
             "glob": "**/*",
             "input": "apps/client/public"
+          },
+          { 
+            "glob": "**/*", 
+            "input": "node_modules/ng2-pdfjs-viewer/pdfjs", 
+            "output": "/assets/pdfjs" 
           }
         ],
-        "styles": ["apps/client/src/styles.scss"],
+        "styles": [
+          "node_modules/primeflex/primeflex.css",
+          "apps/client/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -39,12 +49,24 @@
               "maximumError": "8kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/client/src/environments/environment.ts",
+              "with": "libs/environments/src/lib/environments/environment.production.ts"
+            }
+          ]
         },
         "development": {
           "optimization": false,
           "extractLicenses": false,
-          "sourceMap": true
+          "sourceMap": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/client/src/environments/environment.ts",
+              "with": "libs/environments/src/lib/environments/environment.development.ts"
+            }
+          ]
         }
       },
       "defaultConfiguration": "production"

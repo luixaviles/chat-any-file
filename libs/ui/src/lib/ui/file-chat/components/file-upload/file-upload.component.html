@@ -1,0 +1,93 @@
+<section class="section">
+  <div class="container">
+    <div class="drop-zone" appFileUpload (dropFiles)="onDropFiles($event)" [class.uploading]="fileState.uploadingFile">
+      <div class="drop-zone-center">
+        @if (fileState.uploadingFile) {
+          <p-progress-spinner styleClass="custom-spinner" strokeWidth="2"/>
+        } @else {
+          <span>Drag and Drop your file here</span>
+        }
+      </div>
+      <div class="drop-zone-bottom">
+        <a (click)="!fileState.uploadingFile && inputFile.click()">
+          <input
+            type="file"
+            hidden
+            #inputFile
+            (change)="selectFile($event)"
+            [disabled]="fileState.uploadingFile"
+          />
+          <mat-icon>upload_file</mat-icon>
+          Browse File
+        </a>
+        <a (click)="!fileState.uploadingFile && showLoadByURLPopup($event)">
+          <mat-icon fontIcon="link"></mat-icon>
+          Load by URL
+        </a>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="card flex justify-content-center gap-2">
+    <p-toast />
+    <p-confirmPopup #confirmPopupRef defaultFocus="none">
+      <ng-template pTemplate="headless" let-message>
+        <div class="border-round p-3">
+          <span>{{ message.message }}</span>
+          <div class="flex align-items-center gap-1 mt-3">
+            <div class="flex flex-column gap-1">
+              <input
+                type="text"
+                pInputText
+                [style]="{ width: '400px' }"
+                [ngClass]="{'ng-invalid': fileURL.invalid, 'ng-dirty': fileURL.dirty}"
+                [formControl]="fileURL"
+                (keyup.enter)="onLoadByURL(inputURL.value)"
+                #inputURL
+              />
+              <div *ngIf="fileURL.invalid && (fileURL.dirty || fileURL.touched)">
+                <span class="font-italic text-red-400" *ngIf="fileURL.errors?.['pattern']">Invalid URL</span>
+              </div>
+            </div>
+
+            <p-button
+              [disabled]="fileURL.invalid"
+              (click)="onLoadByURL(inputURL.value)"
+              label="Load"
+              size="small"
+            />
+          </div>
+        </div>
+      </ng-template>
+    </p-confirmPopup>
+  </div>
+
+  <div class="row row-width">
+    <div class="documents-container">
+      @if (fileState.loadingFileList) {
+      <p-progressBar
+        mode="indeterminate"
+        [style]="{ height: '4px' }"
+      ></p-progressBar>
+      } @for (file of fileList$| async; track file.name) {
+      <div class="document-row">
+        <span>{{ file.name }}</span>
+        <span class="spacer"></span>
+        <p-button
+          label="Chat"
+          [raised]="true"
+          severity="secondary"
+          size="small"
+          [routerLink]="['/chat']"
+          [queryParams]="{ file: file.name }"
+        ></p-button>
+        <p-button [rounded]="true" [text]="true" (click)="onDeleteFile(file)">
+          <mat-icon>delete</mat-icon>
+        </p-button>
+      </div>
+      } 
+    </div>
+  </div>
+
+</section>

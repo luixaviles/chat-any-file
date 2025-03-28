@@ -1,0 +1,24 @@
+$primary-color: #2c3e50;
+$secondary-color: #667080;
+
+
+.header {
+  text-align: center;
+  margin: 2rem;
+
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: $primary-color;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 1.5rem;
+    color: $secondary-color;
+  }
+
+  .highlight {
+    color: #007bff;
+  }
+}

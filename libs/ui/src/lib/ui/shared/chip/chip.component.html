@@ -1,0 +1,14 @@
+<div class="chip-container">
+@for (option of options; track $index) {
+    <p-button
+    [label]="option.label"
+    [rounded]="true"
+    [severity]="isSelected(option) ? 'primary' : 'secondary'"
+    [attr.aria-checked]="isSelected(option)"
+    [attr.aria-disabled]="optionDisabled"
+    (click)="onOptionSelect($event, option, $index)"
+    (focus)="onFocus($event, $index)"
+    (blur)="onBlur()"
+  ></p-button>
+}
+</div>

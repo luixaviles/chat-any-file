@@ -1,0 +1,277 @@
+// Variables
+$primary-color: #2c3e50;
+$secondary-color: #667080;
+$highlight-color: #3b82f6;
+$background-color: #fff;
+$border-radius: 12px;
+$box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+$box-shadow-hover: 0 8px 12px rgba(0, 0, 0, 0.15);
+$transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+// Mixins
+@mixin card-style {
+  background-color: $background-color;
+  padding: 20px;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  transition: $transition;
+  text-align: left;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 15px;
+  border: none;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: $box-shadow-hover;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $primary-color;
+    margin-bottom: 5px;
+  }
+
+  p {
+    font-size: 1rem;
+    color: $secondary-color;
+    margin-bottom: 0;
+  }
+
+  mat-icon {
+    color: $highlight-color;
+    margin: 10px 0 0 0;
+    transform: scale(1.5);
+    overflow: unset;
+  }
+
+  .card-content {
+    flex: 1;
+  }
+}
+
+@mixin text-center {
+  text-align: center;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin grid-center {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+// Styles
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  @include text-center;
+  margin-bottom: 40px;
+
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: $primary-color;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 1.5rem;
+    color: $secondary-color;
+  }
+
+  .highlight {
+    color: #007bff;
+  }
+}
+
+.progress-bar {
+  margin-top: 1.5rem;
+
+  p-progressBar {
+    margin: auto;
+    width: calc(100% - 20px);
+  }
+}
+
+.drop-zone {
+  @include grid-center;
+  grid-template-rows: 1fr auto;
+  border-radius: $border-radius;
+  margin-bottom: 20px;
+  background-color: var(--p-surface-200);
+  border: dashed 2px var(--p-primary-600);
+
+  &-center {
+    padding-top: 40px;
+    @include flex-center;
+    flex-direction: column;
+    color: #00000090;
+    height: 120px;
+  }
+
+  &-bottom {
+    gap: 10px;
+    padding-top: 40px;
+    @include flex-center;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+
+    a {
+      cursor: default;
+      color: #3f51b5;
+
+      mat-icon {
+        vertical-align: middle;
+      }
+    }
+  }
+
+  p {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 10px;
+  }
+
+  #file-input {
+    display: none;
+  }
+}
+
+.uploading {
+    background-color: rgba($secondary-color, 0.2) !important;
+
+    a {
+        color: #3f51b590;
+    }
+}
+
+.row {
+  @include flex-center;
+}
+
+.row-width {
+  width: 100%;
+}
+
+.features,
+.use-cases,
+.section {
+  @include text-center;
+  margin-bottom: 40px;
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: $primary-color;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: $secondary-color;
+    margin-bottom: 10px;
+  }
+}
+
+.features-grid,
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.feature-card,
+.use-case-card {
+  @include card-style;
+}
+
+.footer {
+  @include text-center;
+  padding: 20px;
+  color: #4b5563;
+}
+
+.documents-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  width: 100%;
+  padding: 0 20px;
+
+  h3 {
+    align-self: center;
+  }
+
+  .document-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+    padding-top: 5px;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .features-grid,
+  .use-cases-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    h1 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1rem;
+      color: $secondary-color;
+    }
+
+  }
+
+  .drop-zone {
+    padding: 20px;
+  }
+}
+
+:host ::ng-deep .custom-spinner {
+  width: 80px;
+  .p-progressspinner-circle { 
+    stroke: rgba(59, 130, 246, 0.8) !important;
+    animation: custom-progress-spinner-dash 1.5s ease-in-out infinite, p-progressspinner-circle 0s ease-in-out infinite;
+  } 
+}
+
+@keyframes custom-progress-spinner-dash {
+  0% {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+  }
+  50% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -35px;
+  }
+  100% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -124px;
+  }
+}

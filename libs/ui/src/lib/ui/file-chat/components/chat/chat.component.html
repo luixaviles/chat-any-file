@@ -1,0 +1,104 @@
+<div class="chat-container">
+  <app-chat-header></app-chat-header>
+  <nav class="mobile-nav">
+    <button [ngClass]="{active: mobileNavOption === 'preview'}" (click)="mobileNavOption = 'preview'">Preview</button>
+    <button [ngClass]="{active: mobileNavOption === 'chat'}" (click)="mobileNavOption = 'chat'">Chat</button>
+  </nav>
+  <main class="content">
+    @let fileType = this.fileType$ | async;
+    <section class="preview-section" [ngClass]="{active: mobileNavOption === 'preview'}">
+      <div class="section-content preview-container">
+        @if(loadingPreview()) {
+          Loading...
+        }
+  
+        @let fileURL = fileURL$ | async;
+        @if(fileType === 'document' && fileURL) {
+            <ng2-pdfjs-viewer [pdfSrc]="fileURL" [print]="false" [openFile]="false" [fullScreen]="false" [download]="false"
+              [showSpinner]="true" [externalWindow]="false" [viewBookmark]="false"></ng2-pdfjs-viewer>
+        } @else if(fileType === 'image') {
+          <img [src]="fileURL" alt="" width="80%">
+        } @else if(fileType === 'video') {
+          <video [src]="fileURL" width="80%" controls></video>
+        } @else if(fileType === 'audio') {
+          <audio [src]="fileURL" controls></audio>
+        }
+      </div>
+    </section>
+    <section class="chat-section" [ngClass]="{active: mobileNavOption === 'chat'}">
+      <div class="section-content chat-container">
+        
+        <div class="row chat-body">
+          <div class="document-header">
+            <div class="title-header">
+              <h3>{{ fileType ? (fileType.charAt(0).toUpperCase() + fileType.slice(1).toLowerCase()).trim() : ''}} </h3>
+              <h3 class="filename">{{ fileType? (': ' + filename): '' }}</h3>
+            </div>
+            @if (fileType === 'document') {
+              <div class="options">
+                <p-togglebutton [(ngModel)]="advancedModeEnabled" onLabel="Advanced" offLabel="Advanced" [pTooltip]="tooltipAdvancedMode" />
+              </div>
+            }
+          </div>
+          <div class="flex align-items-center">
+            @if(loadingShortQuestions) {
+              <p-progressSpinner
+                styleClass="w-1rem h-1rem"
+                strokeWidth="8"
+                [style]="{ color: 'blue' }"
+                animationDuration=".5s"
+              ></p-progressSpinner>
+            }
+            @if(contents.length === 0) {
+              <app-chip
+                [options]="(shortQuestions$ | async) || []"
+                optionLabel="label"
+                optionValue="value"
+                (onOptionClick)="message = $event.option.value; sendMessage(message)"
+              ></app-chip>
+            }
+          </div>
+          <div class="chat-container">
+            @for (content of contents; track $index) { 
+              @if(content.agent === 'model' && content.state === chatContentState.WAITING) {
+                <p-skeleton height="3rem" styleClass="mb-2"></p-skeleton>
+            } @else {
+            <div class="chat-message" [ngClass]="content.agent">
+              <div class="message-details">
+      
+                @if(content.state === chatContentState.GENERATING) {
+                    <p-progressSpinner
+                    styleClass="w-1rem h-1rem"
+                    strokeWidth="8"
+                    [style]="{ color: 'blue' }"
+                    animationDuration=".5s"
+                  ></p-progressSpinner>
+                }
+                <markdown
+                  class="variable-binding message-content"
+                  [data]="content.message"
+                >
+                </markdown>
+              </div>
+            </div>
+            } }
+          </div>
+        </div>
+      
+        <div class="row footer">
+          <input
+            pInputText
+            type="text"
+            placeholder=""
+            [(ngModel)]="message"
+            (keyup.enter)="sendMessage(message)"
+          />
+          <p-button (onClick)="sendMessage(message)">
+            <mat-icon>send</mat-icon>
+          </p-button>
+        </div>
+
+      </div>
+    </section>
+  </main>
+</div>

@@ -1,5 +1,33 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+html, body { height: 100%; }
+body { margin: 0;}
 
-/* You can add global styles to this file, and also import other style files */
+html, main {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+}
+
+label {
+    color: var(--p-text-color);
+    font-weight: 500;
+}
+
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
