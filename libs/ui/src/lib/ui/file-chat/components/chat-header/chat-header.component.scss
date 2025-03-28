@@ -1,0 +1,10 @@
+$border-color: #e0e0e0;
+$padding: 10px;
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $padding;
+  border-bottom: 1px solid $border-color;
+}
