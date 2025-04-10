@@ -1,1 +1,3 @@
-src/lib/environments/
+src/lib/environments/environment.ts
+src/lib/environments/environment.development.ts
+src/lib/environments/environment.production.ts

@@ -1,77 +1,134 @@
-# ChatAnyFile
+# Chat Any File
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+<div align="center">
+  <p>
+    <strong>Chat with any file using AI - PDFs, Images, Videos, and Audio</strong>
+  </p>
+  
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+  [![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat&logo=angular&logoColor=white)](https://angular.io/)
+  [![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat&logo=nestjs&logoColor=white)](https://nestjs.com/)
+  [![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=firebase&logoColor=black)](https://firebase.google.com/)
+  [![Gemini](https://img.shields.io/badge/Gemini-4285F4?style=flat&logo=google&logoColor=white)](https://gemini.google.com/)
+</div>
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+## 🚀 Overview
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+ChatAnyFile is a powerful full-stack application that allows you to interact with your files using AI. Upload PDFs, images, videos, and audio files, and start having meaningful conversations with them. The application uses Google's Gemini AI to understand and respond to your queries about the content of your files.
 
-## Finish your remote caching setup
+<div align="center">
+  <img src="./images/chat-any-file.gif?raw=true" width="500px">
+</div>
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/BA8q90KR2n)
 
+### ✨ Features
 
-## Run tasks
+- 📄 Upload and chat with PDF documents
+- 🖼️ Process and understand images
+- 🎥 Analyze video content
+- 🎵 Interact with audio files
+- 🔗 Support for file upload via drag & drop or by URL
+- 💬 Natural language conversations with your files
+- 🎨 Creative content generation based on multimedia files
 
-To run tasks with Nx use:
+## 🏗️ Project Structure
 
-```sh
-npx nx <target> <project-name>
+This project is built using [Nx monorepo](https://nx.dev/), which provides a powerful set of tools for managing and scaling enterprise-level applications with multiple applications and shared libraries.
+
+```
+chat-any-file/
+├── apps/
+│   ├── client/          # Angular frontend application
+│   └── server/          # NestJS backend application
+├── libs/                # Shared libraries
 ```
 
-For example:
+## 🛠️ Prerequisites
 
-```sh
-npx nx build myproject
+- Node.js (v18 or later)
+- npm or yarn
+- Firebase account
+- Google Cloud account
+- Gemini API key
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/luixaviles/chat-any-file.git
+cd chat-any-file
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+### 2. Install Dependencies
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Add new projects
-
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-To install a new plugin you can use the `nx add` command. Here's an example of adding the React plugin:
-```sh
-npx nx add @nx/react
+```bash
+npm install
 ```
 
-Use the plugin's generator to create new projects. For example, to create a new React app or library:
+### 3. Environment Setup
 
-```sh
-# Generate an app
-npx nx g @nx/react:app demo
+#### Backend (NestJS Server)
 
-# Generate a library
-npx nx g @nx/react:lib some-lib
+1. Navigate to the server directory:
+   ```bash
+   cd apps/server
+   ```
+
+2. Create a `.env` file based on `.env.example`:
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Configure the following environment variables:
+   - `API_KEY`: Your Gemini API key from [Google AI Studio](https://aistudio.google.com/)
+   - `GOOGLE_CLOUD_STORAGE_BUCKET`: Your Firebase Storage bucket name. See more information [here](https://firebase.google.com/docs/storage/web/start)
+   - `GOOGLE_APPLICATION_CREDENTIALS`: Path to your service account JSON file. See more information [here](https://cloud.google.com/docs/authentication/application-default-credentials)
+
+#### Frontend (Angular App)
+
+1. Create environment files:
+   ```bash
+   cd libs/environments/src/lib/environments
+   cp environment.template.ts environment.ts
+   cp environment.template.ts environment.development.ts
+   ```
+
+2. Configure Firebase in your environment files:
+   - Go to [Firebase Console](https://console.firebase.google.com/)
+   - Select your project
+   - Click on the web icon (</>) to add a new web app
+   - Copy the Firebase configuration object
+   - Paste it into both `environment.ts` and `environment.development.ts`
+
+### 4. Start the Development Servers
+
+In separate terminal windows:
+
+```bash
+# Start the backend server
+npx nx serve server
+
+# Start the frontend application
+npx nx serve client
 ```
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+The application will be available at:
+- Frontend: http://localhost:4200
+- Backend: http://localhost:3000/api
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 📚 Documentation
 
+- [NestJS Documentation](https://docs.nestjs.com/)
+- [Angular Documentation](https://angular.io/docs)
+- [Firebase Documentation](https://firebase.google.com/docs)
+- [Gemini API Documentation](https://ai.google.dev/docs)
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 🤝 Contributing
 
-## Install Nx Console
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+## 📄 License
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
