@@ -6,10 +6,7 @@ import {
 } from '@google/generative-ai';
 import { Injectable } from '@nestjs/common';
 
-const GEMINI_2_LITE = 'gemini-2.0-flash';
-const GEMINI_2_TOKEN_LIMIT = 1048576;
-const DEFAULT_MODEL_NAME = GEMINI_2_LITE;
-
+const DEFAULT_MODEL_NAME = 'gemini-2.0-flash';
 const SHORT_QUESTIONS_SCHEMA: Schema = {
   description: 'List of short questions based on a text context',
   type: SchemaType.OBJECT,

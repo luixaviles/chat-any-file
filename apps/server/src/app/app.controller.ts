@@ -5,8 +5,7 @@ import {
   Get,
   Post,
   Req,
-  Response,
-  UseGuards,
+  Response
 } from '@nestjs/common';
 
 import { ChatService } from '@app/api';
@@ -14,10 +13,7 @@ import { ChatContent } from '@app/shared';
 import { Readable } from 'stream';
 
 import {
-  AnonymousLimitException,
-  AnonymousTrackerService,
   FileHandlerService,
-  FirebaseAuthGuard,
   ShortQuestionService,
 } from '@app/api';
 import { ShortQuestionRequest } from '@app/shared';
@@ -28,7 +24,6 @@ export class AppController {
     private readonly chatService: ChatService,
     private readonly shortQuestionsService: ShortQuestionService,
     private fileHandlerService: FileHandlerService,
-    private anonymousTracker: AnonymousTrackerService
   ) {}
 
   @Get()
@@ -46,24 +41,12 @@ export class AppController {
     return this.shortQuestionsService.getShortQuestions(fileType);
   }
 
-  @UseGuards(FirebaseAuthGuard)
   @Post('chat-stream')
   async chatStream(
     @Body() chatContent: ChatContent,
     @Req() request,
     @Response() response
   ): Promise<void> {
-    const [uuid] = chatContent.filename.split('/');
-    const { isAnonymous } = request.user;
-
-    if (isAnonymous) {
-      request.user.uuid = uuid;
-      this.anonymousTracker.trackAnonymousInteraction(uuid);
-      if (this.anonymousTracker.hasExceededAnonymousLimit(uuid)) {
-        throw new AnonymousLimitException();
-      }
-    }
-
     const result = await this.chatService.chatStream(chatContent);
     const readable = Readable.from(
       (async function* () {
